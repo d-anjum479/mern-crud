@@ -23,11 +23,10 @@ const userSchema = new Schema(
       type: String,
       required: true,
       trim: true,
-      index: true,
+      index: true, // to enable searching in database for any field, optimization related
     },
     avatar: {
       type: String, // Cloudinary URL
-      required: true,
     },
     coverImage: {
       type: String, // Cloudinary URL
@@ -53,7 +52,7 @@ userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     return next();
   }
-  this.password = bcrypt.hash(this.password, 10);
+  this.password = await bcrypt.hash(this.password, 10);
   next();
 });
 

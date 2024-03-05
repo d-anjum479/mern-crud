@@ -4,7 +4,7 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 
-// middlewares portion
+// ========================middlewares portion===============================
 app.use(
   cors({
     origin: process.env.CORS_ORIGIN,
@@ -23,4 +23,12 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" })); // we can tak ob
 app.use(express.static("public"));
 // to perform cookie crud operation from server to user browser
 app.use(cookieParser());
+
+// ========================Importing Routes===============================
+import userRoutes from "./routes/userRoutes.js";
+
+// localhost:8000/api/v1/users => control pass to userRoutes
+// user routes
+app.use("/api/v1/users", userRoutes);
+
 export { app };
